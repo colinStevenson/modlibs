@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+@import '../../node_modules/bootstrap/scss/variables';
+body{
+  font-family: 'Lato', serif;
+}
+.model-container{
+  position: relative;
+  overflow: auto;
+  height: 100vh;
+  margin: 30px 0 0 0;
+}
+.model-outcome{
+  color: #fff;
+  margin: 0;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  font-size: 20px;
+  z-index: 2;
+  left: 0;
+}
+// Positioning
+//
+$leaf-width: 300px;
+$spacer: 10px;
+//  Tree expanded icon
+.tree{
+  padding-left: $spacer*4;
+  position: relative;
+  &:before{
+    content: '';
+    position: absolute;
+    left: $spacer;
+    top: 0;
+    border-left: 1px dotted #ccc;
+    width: 0;
+    height: 100%;
+  }
+  > .btn-toggle {
+    background: $brand-primary;
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #fff;
+    width: $spacer*2;
+    height: $spacer*2;
+    border-radius: 1em;
+    padding: 0;
+    text-align: center;
+    line-height: $spacer*2-4;
+  }
+  &.collapsed{
+    &:before{
+      display: none;
+    }
+    > .leaf,
+    > .controls{
+      display: none;
+    }
+    min-height: 30px;
+  }
+}
+.leaf{
+  margin-bottom: $spacer;
+}
+// Styling
+//
+.slug{
+  background: #fff;
+  .slug-text-container{
+    margin-bottom: $spacer;
+  }
+  .slug-text{
+    border-bottom: 1px dotted #000;
+  }
+} 
+.outcome .outcome{
+  &.active{
+    > .slug{
+      color: $brand-success;
+    }
+  }
+}
+.outcome{
+  .controls{
+    margin-left: $spacer*4;
+  }
+}
+.fork-controls{
+  padding-top: $spacer;
+}
