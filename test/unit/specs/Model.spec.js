@@ -1,4 +1,8 @@
 import Model from '@/model/model'
+const modelScope = {
+  apples: 1,
+  oranges: 20
+}
 
 describe('Model.js', () => {
   it('should set and get its name', () => {
@@ -41,6 +45,7 @@ describe('Model.js', () => {
   })
   it('should evaluate outcomes based on model scope', () => {
     const model = new Model(1)
+    model.setScope(modelScope)
     const outcomeA = model.createOutcome(function () { return this.apples === 1 }, model.createSlug('one apple.'))
     const outcomeB = model.createOutcome(() => { return true }, model.createSlug('an unknown amount of apples.'))
     const fork = model.createFork()

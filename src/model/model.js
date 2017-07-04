@@ -9,6 +9,7 @@ const Model = function (id, name) {
   this._outcome = this.createOutcome()
   this._components = {}
   this._name = name
+  this._scope = {}
 }
 // Internal
 //
@@ -34,10 +35,10 @@ Model.prototype.addSlug = function (content, fork) {
 }
 // Get scope for actualizer
 Model.prototype.getScope = function () {
-  return {
-    apples: 1,
-    oranges: 20
-  }
+  return this._scope
+}
+Model.prototype.setScope = function (scope) {
+  this._scope = scope
 }
 // Public: create components
 //

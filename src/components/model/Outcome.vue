@@ -75,7 +75,7 @@ export default {
   transition: 0.3s box-shadow ease-in;
 
   &:hover{
-    box-shadow: 0 1px 5px rgba(0,0,0,.3);
+    box-shadow: 0 3px 5px rgba(0,0,0,.2);
 
     > .controls{
       opacity: 1;
