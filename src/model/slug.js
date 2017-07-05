@@ -1,3 +1,5 @@
+import Fork from './fork'
+
 const Slug = function (id, content, fork, model) {
   // Generate random id?
   this._id = id
@@ -24,5 +26,20 @@ Slug.prototype.toString = function () {
     content = [content, this._fork.toString()].join('')
   }
   return content
+}
+Slug.prototype.export = function () {
+  return {
+    id: this._id,
+    content: this._content,
+    fork: this._fork ? this._fork.export() : null
+  }
+}
+// Static
+Slug.construct = function (slugIn, model) {
+  let fork = null
+  if (slugIn.fork) {
+    fork = Fork.construct(slugIn.fork, model)
+  }
+  return new Slug(slugIn.id, slugIn.content, fork, model)
 }
 export default Slug

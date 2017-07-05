@@ -1,6 +1,6 @@
 <template>
   <div class="outcome" :class="activeClass">
-    <slug v-for="item in sequence" :key="item._id" :slug="item" :model="model" v-if="item._type === 'slug'"></slug>
+    <slug :slug="slug" :model="model"></slug>
     <div class="form-group" v-if="isEditing">
       <textarea class="form-control" rows="3" v-model="actualizer"></textarea>
       <button class="btn btn-sm btn-success" @click="saveActualizer">Save</button>
@@ -29,8 +29,8 @@ export default {
         ? 'active'
         : 'inactive'
     },
-    sequence () {
-      return this.outcome._sequence
+    slug () {
+      return this.outcome._slug
     },
     hasActualizer () {
       return !!this.actualizer

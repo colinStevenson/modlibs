@@ -1,3 +1,5 @@
+import Outcome from './outcome'
+
 const Fork = function (id, model) {
   this._id = id
   this._model = model
@@ -22,5 +24,17 @@ Fork.prototype.toString = function () {
     }
   }
   return content.join('')
+}
+Fork.prototype.export = function () {
+  return {
+    id: this._id,
+    outcomes: this._outcomes.map(outcome => outcome.export())
+  }
+}
+// Static
+Fork.construct = function (forkIn, model) {
+  const fork = new Fork(forkIn.id, model)
+  fork._outcomes = forkIn.outcomes.map(outcomeIn => Outcome.construct(outcomeIn, model))
+  return fork
 }
 export default Fork

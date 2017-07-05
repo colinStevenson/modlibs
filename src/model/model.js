@@ -4,10 +4,9 @@ import Outcome from './outcome'
 
 const Model = function (id, name) {
   // Generate random id?
-  this.id = id
+  this._id = id
   this._internalId = 0
   this._outcome = this.createOutcome()
-  this._components = {}
   this._name = name
   this._scope = {}
 }
@@ -27,10 +26,9 @@ Model.prototype.setName = function (name) {
 Model.prototype.getName = function () {
   return this._name
 }
-Model.prototype.addSlug = function (content, fork) {
+Model.prototype.setSlug = function (content, fork) {
   const slug = this.createSlug(content, fork)
-  this._outcome.addSlug(slug)
-  this._components[slug.getId()] = slug
+  this._outcome.setSlug(slug)
   return slug
 }
 // Get scope for actualizer
@@ -57,5 +55,18 @@ Model.prototype.createOutcome = function (actualizer, slug) {
   const outcome = new Outcome(id, this, actualizer, slug)
   return outcome
 }
-
+// Static
+Model.stringify = function (model) {
+  return JSON.stringify({
+    id: model._id,
+    name: model._name,
+    outcome: model._outcome.export()
+  })
+}
+Model.parse = function (jsonModel) {
+  let modelIn = JSON.parse(jsonModel)
+  const model = new Model(modelIn.id, modelIn.name)
+  model._outcome = Outcome.construct(modelIn.outcome, model)
+  return model
+}
 export default Model
