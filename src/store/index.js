@@ -7,10 +7,7 @@ Vue.use(Vuex)
 const model = new Model(1, 'Unnamed model')
 model.setScope({
   apples: 1,
-  oranges: 20,
-  getTest () {
-    return 'Test'
-  }
+  oranges: 20
 })
 const subOutcomeA = model.createOutcome(() => { return true }, model.createSlug('well.'))
 const subOutcomeB = model.createOutcome(() => { return false }, model.createSlug('poorly.'))

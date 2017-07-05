@@ -2,7 +2,7 @@
   <div class="model">
     <h1>{{model.getName()}}</h1>
     <p class="model-outcome bg-success">
-      {{model.toString()}}
+      Current output: {{model.toString()}}
     </p>
     <div class="model-container">
       <outcome :outcome="outcome" :model="model"></outcome> 

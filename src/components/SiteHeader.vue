@@ -9,3 +9,8 @@
 export default {
 }
 </script>
+<style>
+  nav.navbar{
+    z-index: 2;
+  }
+</style>
