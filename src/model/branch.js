@@ -1,9 +1,9 @@
 import Slug from './slug'
 
-const Branch = function (id, model, actualizer, slug) {
+const Branch = function (id, model, condition, slug) {
   this._id = id
   this._model = model
-  this._actualizer = actualizer
+  this._condition = condition
   this._slug = slug || null
   this._type = 'branch'
 }
@@ -14,8 +14,8 @@ Branch.prototype.setSlug = function (slug) {
   this._slug = slug
 }
 Branch.prototype.test = function () {
-  this._actualizer = this._actualizer || function () { return true }
-  return !!this._actualizer.apply(this._model.getScope())
+  this._condition = this._condition || function () { return true }
+  return !!this._condition.apply(this._model.getScope())
 }
 Branch.prototype.toString = function () {
   return this._slug.toString()
@@ -23,20 +23,20 @@ Branch.prototype.toString = function () {
 Branch.prototype.export = function () {
   return {
     id: this._id,
-    actualizer: this._actualizer ? this._actualizer.toString() : null,
+    condition: this._condition ? this._condition.toString() : null,
     slug: this._slug.export()
   }
 }
 // Static
 Branch.construct = function (branchIn, model) {
   const branch = new Branch(branchIn.id, model, null)
-  branch._actualizer = Branch.parseActualizer(branchIn.actualizer)
+  branch._condition = Branch.parseCondition(branchIn.condition)
   branch._slug = Slug.construct(branchIn.slug, model)
   return branch
 }
-Branch.parseActualizer = function (fn) {
-  let actualizer = null
-  eval('actualizer = ' + fn) // eslint-disable-line no-eval
-  return actualizer
+Branch.parseCondition = function (fn) {
+  let condition = null
+  eval('condition = ' + fn) // eslint-disable-line no-eval
+  return condition
 }
 export default Branch

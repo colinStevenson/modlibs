@@ -31,7 +31,7 @@ Model.prototype.setSlug = function (content, fork) {
   this._branch.setSlug(slug)
   return slug
 }
-// Get scope for actualizer
+// Get scope for condition
 Model.prototype.getScope = function () {
   return this._scope
 }
@@ -50,9 +50,9 @@ Model.prototype.createFork = function () {
   const fork = new Fork(id, this)
   return fork
 }
-Model.prototype.createBranch = function (actualizer, slug) {
+Model.prototype.createBranch = function (condition, slug) {
   const id = this._generateId()
-  const branch = new Branch(id, this, actualizer, slug)
+  const branch = new Branch(id, this, condition, slug)
   return branch
 }
 // Static
