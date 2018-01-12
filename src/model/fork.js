@@ -1,25 +1,25 @@
-import Outcome from './outcome'
+import Branch from './branch'
 
 const Fork = function (id, model) {
   this._id = id
   this._model = model
-  this._outcomes = []
+  this._branches = []
   this._type = 'fork'
 }
-Fork.prototype.addOutcome = function (outcome) {
-  this._outcomes.push(outcome)
+Fork.prototype.addBranch = function (branch) {
+  this._branches.push(branch)
 }
-Fork.prototype.removeOutcome = function (outcome) {
-  const id = outcome.getId()
-  this._outcomes = this._outcomes.filter(outcome => { return outcome.getId() !== id })
+Fork.prototype.removeBranch = function (branch) {
+  const id = branch.getId()
+  this._branches = this._branches.filter(branch => { return branch.getId() !== id })
 }
 Fork.prototype.toString = function () {
   let content = []
-  for (let i = 0; i < this._outcomes.length; i++) {
-    const outcome = this._outcomes[i]
-    if (outcome.test()) {
-      content.push(outcome.toString())
-      // assuming that only one outcome should succeed per fork so stop trying for others
+  for (let i = 0; i < this._branches.length; i++) {
+    const branch = this._branches[i]
+    if (branch.test()) {
+      content.push(branch.toString())
+      // assuming that only one branch should succeed per fork so stop trying for others
       break
     }
   }
@@ -28,13 +28,13 @@ Fork.prototype.toString = function () {
 Fork.prototype.export = function () {
   return {
     id: this._id,
-    outcomes: this._outcomes.map(outcome => outcome.export())
+    branches: this._branches.map(branch => branch.export())
   }
 }
 // Static
 Fork.construct = function (forkIn, model) {
   const fork = new Fork(forkIn.id, model)
-  fork._outcomes = forkIn.outcomes.map(outcomeIn => Outcome.construct(outcomeIn, model))
+  fork._branches = forkIn.branches.map(branchIn => Branch.construct(branchIn, model))
   return fork
 }
 export default Fork

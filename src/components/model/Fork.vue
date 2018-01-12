@@ -1,17 +1,17 @@
 <template>
   <div class="fork tree" :class="{'collapsed': collapsed}">
     <button class="btn btn-toggle" @click="toggleCollapse">{{collapsed ? '+' : '-'}}</button>
-    <outcome v-for="outcome in outcomes" :key="outcome._id" :outcome="outcome" :fork="fork" :model="model" class="leaf"></outcome>
+    <branch v-for="branch in branches" :key="branch._id" :branch="branch" :fork="fork" :model="model" class="leaf"></branch>
     <div class="leaf fork-controls">
-      <button class="btn btn-sm btn-success" @click="addOutcome">&plus;</button>
+      <button class="btn btn-sm btn-success" @click="addBranch">&plus;</button>
     </div>
   </div>
 </template>
 <script>
 export default {
   computed: {
-    outcomes () {
-      return this.fork._outcomes
+    branches () {
+      return this.fork._branches
     }
   },
   data () {
@@ -23,9 +23,9 @@ export default {
     toggleCollapse () {
       this.collapsed = !this.collapsed
     },
-    addOutcome () {
-      this.fork.addOutcome(
-        this.model.createOutcome(function () { return true }, this.model.createSlug('[Slug Text]'))
+    addBranch () {
+      this.fork.addBranch(
+        this.model.createBranch(function () { return true }, this.model.createSlug('[Slug Text]'))
       )
     }
   },

@@ -9,7 +9,7 @@ body{
   height: 100vh;
   margin: 30px 0 0 0;
 }
-.model-outcome{
+.model-branch{
   color: #fff;
   margin: 0;
   padding: 10px;
@@ -75,14 +75,14 @@ $spacer: 10px;
     border-bottom: 1px dotted #000;
   }
 } 
-.outcome .outcome{
+.branch .branch{
   &.active{
     > .slug{
       color: theme-color("success");
     }
   }
 }
-.outcome{
+.branch{
   .controls{
     margin-left: $spacer*4;
   }
