@@ -1,9 +1,9 @@
 <template>
   <section class="card model-scope">
-    <div class="card-block">
+    <div class="card-body">
       <h1 class="card-title">Model Inputs</h1>
     </div>
-    <div class="card-block">
+    <div class="card-body">
       <div class="form-group row" v-for="(value, field) in scope" :key="field">
         <label class="col-4 col-form-label">{{field}}</label>
         <div class="col-8">

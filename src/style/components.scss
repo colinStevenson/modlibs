@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Lato');
-@import '../../node_modules/bootstrap/scss/variables';
+@import '../../node_modules/bootstrap/scss/bootstrap'; 
 body{
   font-family: 'Lato', serif;
 }
@@ -38,7 +38,7 @@ $spacer: 10px;
     height: 100%;
   }
   > .btn-toggle {
-    background: $brand-primary;
+    background: theme-color("primary");
     position: absolute;
     left: 0;
     top: 0;
@@ -78,7 +78,7 @@ $spacer: 10px;
 .outcome .outcome{
   &.active{
     > .slug{
-      color: $brand-success;
+      color: theme-color("success");
     }
   }
 }

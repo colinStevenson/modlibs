@@ -19,5 +19,4 @@ export default {
   }
 }
 </script>
-<style src="../node_modules/bootstrap/dist/css/bootstrap.min.css"></style>
 <style lang="scss" src="./style/components.scss"></style>
