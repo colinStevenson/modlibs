@@ -1,12 +1,12 @@
 import Slug from './slug'
 import Fork from './fork'
-import Outcome from './outcome'
+import Branch from './branch'
 
 const Model = function (id, name) {
   // Generate random id?
   this._id = id
   this._internalId = 0
-  this._outcome = this.createOutcome()
+  this._branch = this.createBranch()
   this._name = name
   this._scope = {}
 }
@@ -18,7 +18,7 @@ Model.prototype._generateId = function () {
 // Public misc
 //
 Model.prototype.toString = function () {
-  return this._outcome.toString()
+  return this._branch.toString()
 }
 Model.prototype.setName = function (name) {
   this._name = name
@@ -28,7 +28,7 @@ Model.prototype.getName = function () {
 }
 Model.prototype.setSlug = function (content, fork) {
   const slug = this.createSlug(content, fork)
-  this._outcome.setSlug(slug)
+  this._branch.setSlug(slug)
   return slug
 }
 // Get scope for actualizer
@@ -50,23 +50,23 @@ Model.prototype.createFork = function () {
   const fork = new Fork(id, this)
   return fork
 }
-Model.prototype.createOutcome = function (actualizer, slug) {
+Model.prototype.createBranch = function (actualizer, slug) {
   const id = this._generateId()
-  const outcome = new Outcome(id, this, actualizer, slug)
-  return outcome
+  const branch = new Branch(id, this, actualizer, slug)
+  return branch
 }
 // Static
 Model.stringify = function (model) {
   return JSON.stringify({
     id: model._id,
     name: model._name,
-    outcome: model._outcome.export()
+    branch: model.branch.export()
   })
 }
 Model.parse = function (jsonModel) {
   let modelIn = JSON.parse(jsonModel)
   const model = new Model(modelIn.id, modelIn.name)
-  model._outcome = Outcome.construct(modelIn.outcome, model)
+  model._branch = Branch.construct(modelIn.branch, model)
   return model
 }
 export default Model

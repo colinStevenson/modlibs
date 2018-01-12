@@ -1,5 +1,5 @@
 <template>
-  <div class="outcome" :class="activeClass">
+  <div class="branch" :class="activeClass">
     <slug :slug="slug" :model="model"></slug>
     <div class="form-group" v-if="isEditing">
       <textarea class="form-control" rows="3" v-model="actualizer"></textarea>
@@ -10,9 +10,9 @@
         &fnof;
         <span class="sr-only">Edit Function</span>
       </button>
-      <button v-if="fork" type="button" class="btn btn-danger btn-sm" @click="removeOutcome">
+      <button v-if="fork" type="button" class="btn btn-danger btn-sm" @click="removeBranch">
         &times;
-        <span class="sr-only">Remove Outcome</span>
+        <span class="sr-only">Remove Branch</span>
       </button>
     </div>
   </div>
@@ -25,20 +25,20 @@ export default {
   },
   computed: {
     activeClass () {
-      return this.outcome.test()
+      return this.branch.test()
         ? 'active'
         : 'inactive'
     },
     slug () {
-      return this.outcome._slug
+      return this.branch._slug
     },
     hasActualizer () {
       return !!this.actualizer
     }
   },
   created () {
-    this.actualizer = this.outcome._actualizer
-      ? this.outcome._actualizer.toString()
+    this.actualizer = this.branch._actualizer
+      ? this.branch._actualizer.toString()
       : null
   },
   data () {
@@ -48,28 +48,28 @@ export default {
     }
   },
   methods: {
-    removeOutcome () {
-      this.fork.removeOutcome(this.outcome)
+    removeBranch () {
+      this.fork.removeBranch(this.branch)
     },
     toggleEditing () {
       this.isEditing = !this.isEditing
     },
     saveActualizer () {
-      let actualizer = this.outcome._actualizer
+      let actualizer = this.branch._actualizer
       try {
         eval(`actualizer = ${this.actualizer}`)// eslint-disable-line no-eval
       } catch (e) {
         console.log(e)
       }
-      this.outcome._actualizer = actualizer
+      this.branch._actualizer = actualizer
       this.isEditing = false
     }
   },
-  props: ['outcome', 'fork', 'model']
+  props: ['branch', 'fork', 'model']
 }
 </script>
 <style lang="scss">
-.outcome .outcome{
+.branch .branch{
   padding: 20px;
   box-shadow: 0 0 0 rgba(0,0,0,.3);
   transition: 0.3s box-shadow ease-in;
@@ -82,7 +82,7 @@ export default {
     }
   }
 }
-.outcome > .controls{
+.branch > .controls{
   background: rgba(0, 0, 0, 0.02);
   border-top: 1px solid #ccc;
   padding: 10px;

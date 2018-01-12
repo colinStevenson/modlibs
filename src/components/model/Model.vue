@@ -1,11 +1,11 @@
 <template>
   <div class="model">
     <h1>{{model.getName()}}</h1>
-    <p class="model-outcome bg-success">
+    <p class="model-branch bg-success">
       Current output: {{model.toString()}}
     </p>
     <div class="model-container">
-      <outcome :outcome="outcome" :model="model"></outcome> 
+      <branch :branch="branch" :model="model"></branch> 
     </div>
   </div>
 </template>
@@ -17,8 +17,8 @@ export default {
     ...mapGetters([
       'model'
     ]),
-    outcome () {
-      return this.model._outcome
+    branch () {
+      return this.model._branch
     }
   }
 }

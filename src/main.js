@@ -10,8 +10,8 @@ Vue.use(Vuex)
 Vue.config.productionTip = false
 
 // Need to declare this component globally to use recursively
-import Outcome from './components/model/Outcome'
-Vue.component('outcome', Outcome)
+import Branch from './components/model/Branch'
+Vue.component('branch', Branch)
 
 /* eslint-disable no-new */
 new Vue({
