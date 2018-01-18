@@ -1,8 +1,8 @@
 <template>
-  <div class="container-fluid">
-    <model></model>
-    <scope></scope>
-  </div>
+	<div class="container-fluid">
+		<model></model>
+		<scope></scope>
+	</div>
 </template>
 
 <script>
@@ -10,15 +10,15 @@ import Model from './model/Model'
 import Scope from './model/Scope'
 
 export default {
-  components: {
-    Model,
-    Scope
-  }
+	components: {
+		Model,
+		Scope
+	}
 }
 </script>
 <style>
 .page-content{
-  margin: 20px 80px;
+	margin: 20px 80px;
 }
 </style>
 

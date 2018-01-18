@@ -6,8 +6,8 @@ Vue.use(Vuex)
 
 const model = new Model(1, 'Unnamed model')
 model.setScope({
-  apples: 1,
-  oranges: 20
+	apples: 1,
+	oranges: 20
 })
 const subBranchA = model.createBranch(() => { return true }, model.createSlug('well.'))
 const subBranchB = model.createBranch(() => { return false }, model.createSlug('poorly.'))
@@ -25,16 +25,16 @@ model.setSlug('This is ', fork)
 window.model = model
 
 const state = {
-  model
+	model
 }
 const mutations = {}
 
 const getters = {
-  model: state => state.model
+	model: state => state.model
 }
 
 export default new Vuex.Store({
-  state,
-  getters,
-  mutations
+	state,
+	getters,
+	mutations
 })
