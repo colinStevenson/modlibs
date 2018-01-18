@@ -1,7 +1,7 @@
 <template>
   <section class="card model-scope">
     <div class="card-body">
-      <h1 class="card-title">Model Inputs</h1>
+      <h1 class="card-title">Model Scope</h1>
     </div>
     <div class="card-body">
       <div class="form-group row" v-for="(value, field) in scope" :key="field">
@@ -61,18 +61,3 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-.model-scope {
-  padding-bottom: 70px;
-  padding-top: 70px;
-  position: fixed;
-  right: 0;
-  top: 0;
-  background: #fff;
-  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
-  min-width: 30vw;
-  height: 100vh;
-  max-height: 100vh;
-  overflow-y: auto;
-}
-</style>

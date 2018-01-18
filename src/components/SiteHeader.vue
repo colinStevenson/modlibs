@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar navbar-inverse bg-primary">
-    <div class="container">
+    <div class="container-fluid">
       <span class="navbar-brand">ModLibs</span>
     </div>
   </nav>
