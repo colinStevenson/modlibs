@@ -31,14 +31,23 @@ class Tree {
 
 	_normalizeNodes (nodes) {
 		// Normalize for fixed-depth.
-		nodes.forEach(d => { d.y = d.depth * 180 })
+		nodes.forEach(node => {
+			node.y = node.depth * 180
+			if (node.data && node.data._condition) {
+				node.active = node.data._condition()
+			} else {
+				node.active = true
+			}
+		})
 	}
 	_getNewNodes (node, source) {
 		const that = this
 		const nodeEnter = node.enter().append('g')
-			.attr('class', 'node')
-			.attr('transform', d => `translate(${source.y0}, ${source.x0})`)
-			.on('click', (d) => { that.handleClick(d) })
+			.attr('class', node => {
+				return node.active ? 'node branch-active' : 'node'
+			})
+			.attr('transform', node => `translate(${source.y0}, ${source.x0})`)
+			.on('click', node => { that.handleClick(node) })
 
 		// Add Circle for the nodes
 		const hasChildren = !!nodeEnter._children

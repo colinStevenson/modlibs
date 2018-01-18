@@ -35,19 +35,21 @@ export default {
 }
 </script>
 <style lang="scss">
-$active-color: #007bff;
+$primary-color: #007bff;
+$active-color: #28a745;
+
 .node circle {
 	fill: #fff;
-	stroke: $active-color;
+	stroke: $primary-color;
 	stroke-width: 2px;
 
 	&.has-children{
-		fill: lighten($active-color, 40%);
+		fill: lighten($primary-color, 40%);
 	}
 }
-
-circle.node{
-	fill: #fff;
+.node.branch-active > circle{
+	stroke: $active-color;
+	fill: lighten($active-color, 40%);
 }
 
 .node text {
