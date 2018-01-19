@@ -9,11 +9,11 @@ model.setScope({
 	apples: 1,
 	oranges: 20
 })
-const subBranchA = model.createBranch((scope) => {
-	return scope.apples === 1
+const subBranchA = model.createBranch(function () {
+	return this.apples === 1
 }, model.createSlug('well.'))
-const subBranchB = model.createBranch((scope) => {
-	return scope.oranges === 1
+const subBranchB = model.createBranch(function () {
+	return this.oranges === 1
 }, model.createSlug('poorly.'))
 const subFork = model.createFork()
 subFork.addBranch(subBranchA)

@@ -47,7 +47,7 @@ $active-color: #28a745;
 	margin: 20px 0;
 
 	> div{
-		height: 50vh
+		height: 50vh;
 	}
 }
 
@@ -60,10 +60,6 @@ $active-color: #28a745;
 		fill: lighten($primary-color, 40%);
 	}
 }
-.node.branch-active > circle{
-	stroke: $active-color;
-	fill: lighten($active-color, 40%);
-}
 
 .node text {
 	font: 12px sans-serif;
@@ -73,6 +69,10 @@ $active-color: #28a745;
 	fill: none;
 	stroke: #ccc;
 	stroke-width: 2px;
+
+	&.link-active{
+		stroke: $active-color;
+	}
 }
 </style>
 

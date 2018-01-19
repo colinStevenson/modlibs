@@ -55,9 +55,8 @@ class Tree {
 			.on('click', node => { that.handleClick(node) })
 
 		// Add Circle for the nodes
-		const hasChildren = !!nodeEnter._children
 		nodeEnter.append('circle')
-			.attr('class', `node ${hasChildren ? 'has-children' : ''}`)
+			.attr('class', d => d.children ? 'node has-children' : 'node')
 			.attr('r', 1e-6)
 
 		// Add labels for the nodes
@@ -81,7 +80,7 @@ class Tree {
 		// Update the node attributes and style
 		nodeUpdate.select('circle.node')
 			.attr('r', 10)
-			.attr('class', d => d._children ? 'has-children' : '')
+			.attr('class', d => d.children ? 'has-children' : '')
 			.attr('cursor', 'pointer')
 	}
 	_exitNodes (node, source) {
@@ -100,7 +99,9 @@ class Tree {
 	}
 	_getNewLinks (link, source) {
 		const linkEnter = link.enter().insert('path', 'g')
-			.attr('class', 'link')
+			.attr('class', node => {
+				return node.active ? 'link link-active' : 'link'
+			})
 			.attr('d', d => {
 				const o = {x: source.x0, y: source.y0}
 				return this.diagonal(o, o)
