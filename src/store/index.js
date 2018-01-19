@@ -5,15 +5,16 @@ import Model from '../model/model'
 Vue.use(Vuex)
 
 const model = new Model(1, 'Unnamed model')
-model.setScope({
+const modelScope = {
 	apples: 1,
 	oranges: 20
-})
+}
+model.setScope(modelScope)
 const subBranchA = model.createBranch(function () {
-	return this.apples === 1
+	return Number(this.apples) === 1
 }, model.createSlug('well.'))
 const subBranchB = model.createBranch(function () {
-	return this.oranges === 1
+	return Number(this.apples) !== 1
 }, model.createSlug('poorly.'))
 const subFork = model.createFork()
 subFork.addBranch(subBranchA)
@@ -29,12 +30,19 @@ model.setSlug('This is ', fork)
 window.model = model
 
 const state = {
-	model
+	model,
+	modelScope
 }
-const mutations = {}
+const mutations = {
+	UPDATE_MODEL_SCOPE (state, payload) {
+		state.modelScope = payload
+		state.model.setScope(payload)
+	}
+}
 
 const getters = {
-	model: state => state.model
+	model: state => state.model,
+	modelScope: state => state.modelScope
 }
 
 export default new Vuex.Store({

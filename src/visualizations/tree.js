@@ -81,7 +81,6 @@ class Tree {
 		nodeUpdate.select('circle.node')
 			.attr('r', 10)
 			.attr('class', d => d.children ? 'has-children' : '')
-			.attr('cursor', 'pointer')
 	}
 	_exitNodes (node, source) {
 		const nodeExit = node.exit().transition()
@@ -126,6 +125,7 @@ class Tree {
 	}
 
 	update (source) {
+		source = source || this.root
 		// Assigns the x and y position for the nodes
 		const treeMap = this.treeMap(this.root)
 		// Compute the new tree layout.
@@ -152,6 +152,14 @@ class Tree {
 			d.x0 = d.x
 			d.y0 = d.y
 		})
+	}
+
+	evaluateBranches () {
+		this.svg.selectAll('path.link')
+			.attr('class', node => {
+				node.active = node.data.test()
+				return node.active ? 'link link-active' : 'link'
+			})
 	}
 
 	getChildrenFromBranch (branch) {

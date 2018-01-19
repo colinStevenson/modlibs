@@ -4,7 +4,7 @@
 			<h1 class="card-title">Model Scope</h1>
 		</div>
 		<div class="card-body">
-			<div class="form-group row" v-for="(value, field) in scope" :key="field">
+			<div class="form-group row" v-for="(value, field) in modelScope" :key="field">
 				<label class="col-4 col-form-label">{{field}}</label>
 				<div class="col-8">
 					<input type="text" class="form-control" :value="value" @keyup="handleValueChange($event, field)">
@@ -32,11 +32,8 @@ import { mapGetters } from 'vuex'
 export default {
 	computed: {
 		...mapGetters([
-			'model'
-		]),
-		scope () {
-			return this.model.getScope()
-		}
+			'modelScope'
+		])
 	},
 	data () {
 		return {
@@ -50,13 +47,14 @@ export default {
 			this.isAddingField = !this.isAddingField
 		},
 		saveNewFieldName () {
-			if (this.newFieldName !== '' && !this.scope[this.newFieldName]) {
-				this.scope[this.newFieldName] = ''
+			if (this.newFieldName !== '' && !this.modelScope[this.newFieldName]) {
+				this.modelScope[this.newFieldName] = ''
 				this.toggleAddingState()
 			}
 		},
 		handleValueChange (event, field) {
-			this.scope[field] = event.target.value
+			this.modelScope[field] = event.target.value
+			this.$store.commit('UPDATE_MODEL_SCOPE', Object.assign({}, this.modelScope))
 		}
 	}
 }

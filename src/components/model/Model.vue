@@ -20,9 +20,17 @@ import Tree from '../../visualizations/tree'
 
 export default {
 	computed: {
-		...mapGetters(['model']),
+		...mapGetters([
+			'model',
+			'modelScope'
+		]),
 		branch () {
 			return this.model._branch
+		}
+	},
+	data () {
+		return {
+			visualization: null
 		}
 	},
 	methods: {
@@ -32,13 +40,16 @@ export default {
 	},
 	mounted () {
 		const stageDimensions = this.getStageDimensions()
-		new Tree(this.$refs.svg, this.branch, {width: stageDimensions[1], height: stageDimensions[0]}) // eslint-disable-line no-new
+		this.visualization = new Tree(this.$refs.svg, this.branch, {width: stageDimensions[1], height: stageDimensions[0]})
+	},
+	watch: {
+		modelScope () {
+			this.visualization.evaluateBranches()
+		}
 	}
 }
 </script>
 <style lang="scss">
-$primary-color: #007bff;
-$active-color: #28a745;
 
 #model-stage{
 	border: 1px solid #ccc;
@@ -48,30 +59,6 @@ $active-color: #28a745;
 
 	> div{
 		height: 50vh;
-	}
-}
-
-.node circle {
-	fill: #fff;
-	stroke: $primary-color;
-	stroke-width: 2px;
-
-	&.has-children{
-		fill: lighten($primary-color, 40%);
-	}
-}
-
-.node text {
-	font: 12px sans-serif;
-}
-
-.link {
-	fill: none;
-	stroke: #ccc;
-	stroke-width: 2px;
-
-	&.link-active{
-		stroke: $active-color;
 	}
 }
 </style>
