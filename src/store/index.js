@@ -9,8 +9,12 @@ model.setScope({
 	apples: 1,
 	oranges: 20
 })
-const subBranchA = model.createBranch(() => { return true }, model.createSlug('well.'))
-const subBranchB = model.createBranch(() => { return false }, model.createSlug('poorly.'))
+const subBranchA = model.createBranch((scope) => {
+	return scope.apples === 1
+}, model.createSlug('well.'))
+const subBranchB = model.createBranch((scope) => {
+	return scope.oranges === 1
+}, model.createSlug('poorly.'))
 const subFork = model.createFork()
 subFork.addBranch(subBranchA)
 subFork.addBranch(subBranchB)

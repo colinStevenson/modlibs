@@ -2,9 +2,11 @@
 	<div class="card model mb-3">
 		<div class="card-body">
 			<h1>{{model.getName()}}</h1>
-			<div ref="stage">
-				<svg ref="svg">
-				</svg>
+			<div id='model-stage' ref="stage">
+				<div>
+					<svg ref="svg">
+					</svg>
+				</div>
 			</div>
 			<p class="model-branch text-success">
 				<strong>Current output: </strong>{{model.toString()}}
@@ -37,6 +39,17 @@ export default {
 <style lang="scss">
 $primary-color: #007bff;
 $active-color: #28a745;
+
+#model-stage{
+	border: 1px solid #ccc;
+	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAIElEQVQoU2NkIAKcPn26gZEIdQyjCvGGEjh4QAQxYQkAfzsc1aILh3wAAAAASUVORK5CYII=) repeat;
+	overflow: auto;
+	margin: 20px 0;
+
+	> div{
+		height: 50vh
+	}
+}
 
 .node circle {
 	fill: #fff;

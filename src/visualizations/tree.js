@@ -6,7 +6,10 @@ class Tree {
 		return {top: 20, right: 90, bottom: 30, left: 90}
 	}
 	static get TRANSITION_DURATION () {
-		return 750
+		return 500
+	}
+	static get SPACING () {
+		return 180
 	}
 
 	constructor (svgEl, branch, {width, height}) {
@@ -25,16 +28,18 @@ class Tree {
 		this.root.y0 = 0
 
 		// Collapse after the second level
-		this.root.children.forEach((d) => this.collapse(d))
+		// this.root.children.forEach((d) => this.collapse(d))
 		this.update(this.root)
 	}
 
 	_normalizeNodes (nodes) {
 		// Normalize for fixed-depth.
 		nodes.forEach(node => {
-			node.y = node.depth * 180
+			node.y = node.depth * Tree.SPACING
+
+			// Evaluate branch for active state
 			if (node.data && node.data._condition) {
-				node.active = node.data._condition()
+				node.active = node.data.test()
 			} else {
 				node.active = true
 			}

@@ -14,8 +14,11 @@ Branch.prototype.setSlug = function (slug) {
 	this._slug = slug
 }
 Branch.prototype.test = function () {
-	this._condition = this._condition || function () { return true }
-	return !!this._condition.apply(this._model.getScope())
+	const condition = this._condition || function () { return true }
+	const scope = this._model.getScope()
+	const result = !!condition(scope)
+	// console.log('scope', result, condition.toString(), scope)
+	return result
 }
 Branch.prototype.toString = function () {
 	return this._slug.toString()
