@@ -65,7 +65,7 @@ class Tree {
 			.attr('x', d => d.children || d._children ? -13 : 13)
 			.attr('text-anchor', d => d.children || d._children ? 'end' : 'start')
 			.text(d => {
-				return d.data && d.data._slug ? d.data._slug._content : '???'
+				return d.data && d.data._slug ? d.data._slug.renderContent() : '???'
 			})
 		return nodeEnter
 	}

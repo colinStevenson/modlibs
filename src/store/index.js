@@ -6,27 +6,33 @@ Vue.use(Vuex)
 
 const model = new Model(1, 'Unnamed model')
 const modelScope = {
-	apples: 1,
-	oranges: 20
+	bengals: 23,
+	browns: 3
 }
 model.setScope(modelScope)
 const subBranchA = model.createBranch(function () {
-	return Number(this.apples) === 1
-}, model.createSlug('well.'))
+	return Math.abs(Number(this.bengals) - Number(this.browns)) >= 10
+}, model.createSlug(' handedly (${this.bengals} - ${this.browns}).')) // eslint-disable-line no-template-curly-in-string
 const subBranchB = model.createBranch(function () {
-	return Number(this.apples) !== 1
-}, model.createSlug('poorly.'))
+	return Math.abs(Number(this.bengals) - Number(this.browns)) < 7
+}, model.createSlug(' by a small margin.'))
 const subFork = model.createFork()
 subFork.addBranch(subBranchA)
 subFork.addBranch(subBranchB)
-const branchA = model.createBranch(() => { return true }, model.createSlug('working ', subFork))
-const branchB = model.createBranch(() => { return false }, model.createSlug('not working ', subFork))
-const branchC = model.createBranch(() => { return false }, model.createSlug('sorta working ', subFork))
+const branchA = model.createBranch(function () {
+	return Number(this.bengals) > Number(this.browns)
+}, model.createSlug('beat the Browns', subFork))
+const branchB = model.createBranch(function () {
+	return Number(this.bengals) === Number(this.browns)
+}, model.createSlug('tied the Browns'))
+const branchC = model.createBranch(function () {
+	return Number(this.bengals) < Number(this.browns)
+}, model.createSlug('lost to the Browns', subFork))
 const fork = model.createFork()
 fork.addBranch(branchA)
 fork.addBranch(branchB)
 fork.addBranch(branchC)
-model.setSlug('This is ', fork)
+model.setSlug('The Bengals ', fork)
 window.model = model
 
 const state = {

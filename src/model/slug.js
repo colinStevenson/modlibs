@@ -18,13 +18,17 @@ Slug.prototype.getId = function () {
 	return this._id
 }
 Slug.prototype.toString = function () {
-	let content = this._content
-	content = (() => {
-		return eval('`' + content + '`') // eslint-disable-line no-eval
-	}).apply(this._model.getScope())
+	let content = this.renderContent()
 	if (this._fork) {
 		content = [content, this._fork.toString()].join('')
 	}
+	return content
+}
+Slug.prototype.renderContent = function () {
+	let content = this._content
+	content = (function () { // eslint-disable-line no-extra-parens
+		return eval('`' + content + '`') // eslint-disable-line no-eval
+	}).apply(this._model.getScope())
 	return content
 }
 Slug.prototype.export = function () {
