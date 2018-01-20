@@ -12,11 +12,14 @@ class Tree {
 		return 180
 	}
 
-	constructor (svgEl, branch, {width, height}) {
+	constructor (svgEl, branch, {width, height, slugSelectHandler}) {
 		const svg = d3.select(svgEl)
 		svg.attr('width', width)
 		svg.attr('height', height)
 		this.iterator = 0
+
+		// Event handlers
+		this._slugSelectHandler = slugSelectHandler
 
 		this.svg = svg.append('g')
 			.attr('id', 'root')
@@ -52,12 +55,12 @@ class Tree {
 				return node.active ? 'node branch-active' : 'node'
 			})
 			.attr('transform', node => `translate(${source.y0}, ${source.x0})`)
-			.on('click', node => { that.handleClick(node) })
 
 		// Add Circle for the nodes
 		nodeEnter.append('circle')
 			.attr('class', d => d.children ? 'node has-children' : 'node')
 			.attr('r', 1e-6)
+			.on('click', node => { that._handleNodeClick(node) })
 
 		// Add labels for the nodes
 		nodeEnter.append('text')
@@ -66,6 +69,9 @@ class Tree {
 			.attr('text-anchor', d => d.children || d._children ? 'end' : 'start')
 			.text(d => {
 				return d.data && d.data._slug ? d.data._slug.renderContent() : '???'
+			})
+			.on('click', (node) => {
+				this._handleSlugSelect(node)
 			})
 		return nodeEnter
 	}
@@ -174,7 +180,7 @@ class Tree {
 			d.children = null
 		}
 	}
-	handleClick (d) {
+	_handleNodeClick (d) {
 		if (d.children) {
 			d._children = d.children
 			d.children = null
@@ -183,6 +189,11 @@ class Tree {
 			d._children = null
 		}
 		this.update(d)
+	}
+	_handleSlugSelect (node) {
+		if (this._slugSelectHandler) {
+			this._slugSelectHandler(node)
+		}
 	}
 	diagonal (s, d) {
 		return `M ${s.y} ${s.x}
