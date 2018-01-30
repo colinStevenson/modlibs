@@ -16,23 +16,17 @@ class Tree {
 		const svg = d3.select(svgEl)
 		svg.attr('width', width)
 		svg.attr('height', height)
-		this.iterator = 0
+		this.branch = branch
+		this.height = height
+		this.width = width
 
 		// Event handlers
 		this._slugSelectHandler = slugSelectHandler
-
 		this.svg = svg.append('g')
 			.attr('id', 'root')
 			.attr('transform', `translate(${Tree.MARGINS.left}, ${Tree.MARGINS.top})`)
 
-		this.treeMap = d3.tree().size([height, width])
-		this.root = d3.hierarchy(branch, b => this.getChildrenFromBranch(b))
-		this.root.x0 = height / 2
-		this.root.y0 = 0
-
-		// Collapse after the second level
-		// this.root.children.forEach((d) => this.collapse(d))
-		this.update(this.root)
+		this.update()
 	}
 
 	_normalizeNodes (nodes) {
@@ -87,6 +81,11 @@ class Tree {
 		nodeUpdate.select('circle.node')
 			.attr('r', 10)
 			.attr('class', d => d.children ? 'has-children' : '')
+
+		nodeUpdate.select('text')
+			.text(d => {
+				return d.data && d.data._slug ? d.data._slug.renderContent() : '???'
+			})
 	}
 	_exitNodes (node, source) {
 		const nodeExit = node.exit().transition()
@@ -130,7 +129,19 @@ class Tree {
 			.remove()
 	}
 
-	update (source) {
+	update () {
+		this.iterator = 0
+		this.treeMap = d3.tree().size([this.height, this.width])
+		this.root = d3.hierarchy(this.branch, b => this.getChildrenFromBranch(b))
+		this.root.x0 = this.height / 2
+		this.root.y0 = 0
+
+		// Collapse after the second level
+		// this.root.children.forEach((d) => this.collapse(d))
+		this.render(this.root)
+	}
+
+	render (source) {
 		source = source || this.root
 		// Assigns the x and y position for the nodes
 		const treeMap = this.treeMap(this.root)
@@ -188,7 +199,7 @@ class Tree {
 			d.children = d._children
 			d._children = null
 		}
-		this.update(d)
+		this.render(d)
 	}
 	_handleSlugSelect (node) {
 		if (this._slugSelectHandler) {

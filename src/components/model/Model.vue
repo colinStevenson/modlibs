@@ -12,7 +12,7 @@
 				<strong>Current output: </strong>{{model.toString()}}
 			</p>
 		</div>
-		<slug v-if="slug" :slug="slug" :model="model"></slug>
+		<slug v-if="slug" :slug="slug" :model="model" :modelUpdateHandler="modelUpdateHandler"></slug>
 	</div>
 </template>
 <script>
@@ -45,6 +45,9 @@ export default {
 		},
 		handleSlugSelection (node) {
 			this.slug = node.data._slug
+		},
+		modelUpdateHandler () {
+			this.visualization.update()
 		}
 	},
 	mounted () {
