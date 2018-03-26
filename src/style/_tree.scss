@@ -1,0 +1,27 @@
+$primary-color: theme-color("primary");
+$active-color: theme-color("success");
+
+.node circle {
+	fill: #fff;
+	stroke: $primary-color;
+	stroke-width: 2px;
+
+	&.has-children{
+		fill: lighten($primary-color, 40%);
+		cursor: pointer;
+	}
+}
+
+.node text {
+	font: 12px sans-serif;
+}
+
+.link {
+	fill: none;
+	stroke: #ccc;
+	stroke-width: 2px;
+
+	&.link-active{
+		stroke: $active-color;
+	}
+}
