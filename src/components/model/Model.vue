@@ -9,10 +9,10 @@
 				</div>
 			</div>
 			<p class="model-branch text-success">
-				<strong>Current output: </strong>{{model.toString()}}
+				<strong>Current output: </strong>{{modelOutput}}
 			</p>
 		</div>
-		<slug v-if="slug" :slug="slug" :model="model" :modelUpdateHandler="modelUpdateHandler"></slug>
+		<slug v-if="slug" :slug="slug" :branch="selectedBranch" :model="model" :modelUpdateHandler="modelUpdateHandler"></slug>
 	</div>
 </template>
 <script>
@@ -35,6 +35,8 @@ export default {
 	},
 	data () {
 		return {
+			selectedBranch: null,
+			modelOutput: null,
 			slug: null,
 			visualization: null
 		}
@@ -45,9 +47,14 @@ export default {
 		},
 		handleSlugSelection (node) {
 			this.slug = node.data._slug
+			this.selectedBranch = node.data
 		},
 		modelUpdateHandler () {
 			this.visualization.update()
+			this.setModelOutput()
+		},
+		setModelOutput () {
+			this.modelOutput = this.model.toString()
 		}
 	},
 	mounted () {
@@ -61,6 +68,7 @@ export default {
 				slugSelectHandler: this.handleSlugSelection
 			}
 		)
+		this.setModelOutput()
 	},
 	watch: {
 		modelScope () {
