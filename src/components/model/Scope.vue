@@ -1,7 +1,7 @@
 <template>
 	<section class="card model-scope">
 		<div class="card-body">
-			<h1 class="card-title">Model Scope</h1>
+			<h1 class="card-title h3">Model Scope</h1>
 		</div>
 		<div class="card-body">
 			<div class="form-group row" v-for="(value, field) in modelScope" :key="field">

@@ -12,7 +12,7 @@ class Tree {
 		return 180
 	}
 
-	constructor (svgEl, branch, {width, height, slugSelectHandler}) {
+	constructor (svgEl, branch, {width, height, slugSelectHandler, forkSelectionHandler}) {
 		const svg = d3.select(svgEl)
 		svg.attr('width', width)
 		svg.attr('height', height)
@@ -22,6 +22,7 @@ class Tree {
 
 		// Event handlers
 		this._slugSelectHandler = slugSelectHandler
+		this._forkSelectionHandler = forkSelectionHandler
 		this.svg = svg.append('g')
 			.attr('id', 'root')
 			.attr('transform', `translate(${Tree.MARGINS.left}, ${Tree.MARGINS.top})`)
@@ -38,12 +39,11 @@ class Tree {
 			if (node.data && node.data._condition) {
 				node.active = node.data.test()
 			} else {
-				node.active = true
+				node.active = false
 			}
 		})
 	}
 	_getNewNodes (node, source) {
-		const that = this
 		const nodeEnter = node.enter().append('g')
 			.attr('class', node => {
 				return node.active ? 'node branch-active' : 'node'
@@ -54,7 +54,9 @@ class Tree {
 		nodeEnter.append('circle')
 			.attr('class', d => d.children ? 'node has-children' : 'node')
 			.attr('r', 1e-6)
-			.on('click', node => { that._handleNodeClick(node) })
+			.on('click', node => {
+				this._handleNodeClick(node)
+			})
 
 		// Add labels for the nodes
 		nodeEnter.append('text')
@@ -118,6 +120,9 @@ class Tree {
 		linkUpdate.transition()
 			.duration(Tree.TRANSITION_DURATION)
 			.attr('d', d => this.diagonal(d, d.parent))
+			.attr('class', node => {
+				return node.active ? 'link link-active' : 'link'
+			})
 	}
 	_exitLinks (link, source) {
 		link.exit().transition()

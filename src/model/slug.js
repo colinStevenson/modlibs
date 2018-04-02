@@ -14,6 +14,9 @@ Slug.prototype.setContent = function (content) {
 Slug.prototype.addFork = function (fork) {
 	this._fork = fork
 }
+Slug.prototype.getFork = function () {
+	return this._fork
+}
 Slug.prototype.getId = function () {
 	return this._id
 }
